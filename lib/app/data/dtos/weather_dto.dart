@@ -17,7 +17,7 @@ class WeatherDto with _$WeatherDto {
       date: db['dt_txt'],
       weather: db['weather'][0]['main'],
       description: db['weather'][0]['description'],
-      temperature: db['main']['temp'],
+      temperature: db['main']['temp'].toDouble(),
       icon: db['weather'][0]['icon'],
     );
   }
