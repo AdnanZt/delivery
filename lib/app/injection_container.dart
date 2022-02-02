@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+
 import 'data/mapper.dart/contrat/weather_dto_mapper.dart';
 import 'data/mapper.dart/impls/weather_dto_mapper_impl.dart';
 import 'data/repositories/user_repository_impl.dart';
@@ -10,6 +11,9 @@ import 'domain/usecases/user/get_weather.dart';
 import 'domain/usecases/validate_credential.dart';
 import 'domain/usecases/validate_email.dart';
 import 'domain/usecases/validate_password.dart';
+import 'presentation/viewmodels/login_view_model.dart';
+import 'presentation/viewmodels/weather_view_model.dart';
+
 final sl = GetIt.instance;
 
 void init() {
@@ -40,6 +44,7 @@ void init() {
       weatherDtoMapper: sl<WeatherDtoMapper>(),
     ),
   );
+
   // ---------------------------------------------------------------------------
   // USE CASES
   // ---------------------------------------------------------------------------
@@ -62,4 +67,20 @@ void init() {
     () => ValidateCredential(),
   );
 
+  // ---------------------------------------------------------------------------
+  // VIEW MODELS
+  // ---------------------------------------------------------------------------
+  sl.registerFactory<WeatherViewModel>(
+    () => WeatherViewModel(
+      getWeather: sl<GetWeather>(),
+    ),
+  );
+
+  sl.registerFactory<LoginViewModel>(
+    () => LoginViewModel(
+      validateCredential: sl<ValidateCredential>(),
+      validateEmail: sl<ValidateEmail>(),
+      validatePassword: sl<ValidatePassword>(),
+    ),
+  );
 }
